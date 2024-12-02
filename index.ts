@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use('/messages', routerRoutes)
 
-
+const path = '../messages';
 
 const run  = async () => {
     try{

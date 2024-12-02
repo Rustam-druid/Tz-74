@@ -7,6 +7,8 @@ const productsRouter = express.Router();
 
 productsRouter.get("/", async (req: express.Request, res: express.Response) => {
     const getMessages = await fileDb.getItems();//получаем все обьекты
+
+    console.log(getMessages);
     res.send(getMessages);
 
 });

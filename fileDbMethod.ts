@@ -12,22 +12,23 @@ const fileDb = {
         try {
             const fileContent = await fs.readFile(fileName);
             data = JSON.parse(fileContent.toString());
+
         } catch (error) {
             console.log(error);
         }
     },
     async getItems() {
-        return data;
+        const last = data.slice(-5)
+        console.log(last)
+        return (last);
     },
     async addItem(item: MessageId) {
         try {
             const id = new Date().toISOString();
             const message = { id, ...item };
 
-
             const messageFileName = path.join(messagesDir,fileNameTime);
             await fs.writeFile(messageFileName, JSON.stringify(message));
-
 
             data.push(message);
             await this.save();

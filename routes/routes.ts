@@ -1,16 +1,31 @@
 import express from "express";
+import fileDb from "../fileDbMethod";
+import {MessageId} from "../types";
 
 
-const routerRoutes = express.Router();
+const productsRouter = express.Router();
 
-routerRoutes.get("/", async (req, res) => {
-
-})
-routerRoutes.get("/:id", async (req, res) => {
-
-})
-routerRoutes.post("/", async (req, res) => {
+productsRouter.get("/", async (req: express.Request, res: express.Response) => {
+    const getMessages = await fileDb.getItems();//получаем все обьекты
+    res.send(getMessages);
 
 });
 
-export default routerRoutes;
+
+productsRouter.get('/:id',async (req: express.Request, res: express.Response) => {
+    const getMessages = await fileDb.getItems();// получам все продукты {} {} {} {}
+    const messageFideId = getMessages.find((message) => message.id === req.params.id);
+// находим по айди из парамс
+    res.send(messageFideId);
+});
+
+
+productsRouter.post("/", async (req: express.Request, res: express.Response) => {
+    const message: MessageId = {
+        message:req.body.message,
+    }; //создайем новый продукт
+    const saveProduct = await fileDb.addItem(message);//сохраняем
+    res.send(saveProduct);//выводим
+});
+
+export default productsRouter;
